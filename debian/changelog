@@ -1,5 +1,397 @@
-template-repository (1.0-1) unstable; urgency=medium
+libvirt-python (9.9.0-1) unstable; urgency=medium
 
-  * Initial release
+  * New upstream version 9.9.0
+  * Drop the libvirt-daemon recommend.
+    The bindings themselves do not need the libvirt daemon; it is up to the
+    actual libvirt users to declare whether they need the libvirt daemon.
 
- -- Tsic404 <liuheng@deepin.org>  Sat, 28 Jan 2023 13:46:49 +0800
+ -- Pino Toscano <pino@debian.org>  Wed, 08 Nov 2023 07:46:32 +0100
+
+libvirt-python (9.8.0-1) unstable; urgency=medium
+
+  * d/watch: use @ARCHIVE_EXT@, switch to the new upstream download location
+  * d/control: mark python3-pytest as !nocheck
+  * New upstream version 9.8.0
+
+ -- Pino Toscano <pino@debian.org>  Mon, 09 Oct 2023 08:01:42 +0200
+
+libvirt-python (9.7.0-1) unstable; urgency=medium
+
+  * Update maintainership:
+    - set Maintainer to Debian Libvirt Maintainers, like other libvirt packages
+    - move Guido to Uploaders
+  * New upstream version 9.7.0
+
+ -- Pino Toscano <pino@debian.org>  Thu, 14 Sep 2023 20:43:50 +0200
+
+libvirt-python (9.6.0-1) unstable; urgency=medium
+
+  [ Guido Günther ]
+  * Add upstream metadata
+  * Update gbp.conf
+
+  [ Pino Toscano ]
+  * Add myself to Uploaders
+  * Drop the manual libvirt0 dependency
+  * Add missing changelog entry for NMU 8.4.0-0.1
+  * Drop git commit names from changelog
+  * Update watch file format version to 4.
+  * Use secure URI in Homepage field.
+  * New upstream version 9.6.0
+  * Stop shipping the upstream README, as it contains only build instructions
+  * d/control: add pybuild-plugin-pyproject build dependency
+  * Ship the upstream examples
+
+ -- Pino Toscano <pino@debian.org>  Sat, 02 Sep 2023 08:21:39 +0200
+
+libvirt-python (9.0.0-1) unstable; urgency=medium
+
+  * [5cf8728] New upstream version 9.0.0
+  * [badae7a] Depend on setuptools
+    (Closes: #1030176)
+  * [698bacb] Add lxml for tests
+  * [9f7e10c] d/control: Bump standards version
+  * [f93bac2] d/control: Add Rules-Requires-Root
+  * [591b770] Use dh-sequence-python3.
+    Thanks to Jochen Sprickerhof
+  * [f5cd9bc] Use autopkgtest-pkg-pybuild for autopkgtests.
+    Thanks to Jochen Sprickerhof
+
+ -- Guido Günther <agx@sigxcpu.org>  Wed, 01 Feb 2023 10:52:00 +0100
+
+libvirt-python (8.4.0-0.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * New upstream release:
+    - supports libvirt 8.2.0 (Closes: #1011902)
+  * Update the build dependencies according to the upstream build system:
+    - add python3-setuptools, needed by the newer build system
+    - add python3-lxml, needed by new tests
+  * Drop the manual libvirt0 dependency, as there will be the proper one based
+    on shlibs.
+  * Include a patch proposed upstream to make the implementation of the 'build'
+    command of the build system compatible again with distutils; patch
+    build-clean-compat.diff.
+  * Add python3-lxml also as a dependency for the 'smoke3' autopkgtest.
+
+ -- Pino Toscano <pino@debian.org>  Sat, 25 Jun 2022 07:16:08 +0200
+
+libvirt-python (8.0.0-1) unstable; urgency=medium
+
+  [ Debian Janitor ]
+  * [a47082c] Trim trailing whitespace.
+    Changes-By: lintian-brush
+    Fixes: lintian: trailing-whitespace
+    See-also: https://lintian.debian.org/tags/trailing-whitespace.html
+  * [a8ae3cb] Update standards version to 4.5.1, no changes needed.
+    Changes-By: lintian-brush
+    Fixes: lintian: out-of-date-standards-version
+    See-also: https://lintian.debian.org/tags/out-of-date-standards-version.html
+
+  [ Guido Günther ]
+  * [9a84d03] New upstream version 8.0.0
+    (Closes: #1005671)
+
+ -- Guido Günther <agx@sigxcpu.org>  Tue, 22 Feb 2022 10:59:53 +0100
+
+libvirt-python (7.9.0-0.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * New upstream release
+    (Closes: #997719)
+  * Switch from nose to pytest, following upstream.
+  * Run autopkgtest on all supported Python versions.
+  * Run test suite at build time.
+  * Drop XB-Python-Version, no longer used.
+
+ -- Stefano Rivera <stefanor@debian.org>  Wed, 24 Nov 2021 20:02:38 -0400
+
+libvirt-python (7.0.0-2) unstable; urgency=medium
+
+  * Upload to unstable
+
+ -- Guido Günther <agx@sigxcpu.org>  Thu, 18 Feb 2021 08:45:20 +0100
+
+libvirt-python (7.0.0-1) experimental; urgency=medium
+
+  * Upload to experimental
+  * [f0560db] Update upstream signing key
+    Add key for Jiří Denemark making the used keyring match what we use for
+    libvirt.
+  * [f7d2bec] New upstream version 7.0.0
+    (Closes: #982695)
+  * [00717f4] Switch to Debhelper 13
+  * [782d7e7] Don't install NEWS.
+    It's not maintained upstream anymore
+
+ -- Guido Günther <agx@sigxcpu.org>  Sun, 14 Feb 2021 14:39:33 +0100
+
+libvirt-python (6.1.0-1) unstable; urgency=medium
+
+  * [318c6a9] New upstream version 6.1.0
+    (Closes: #954703)
+  * [b2883ff] Drop python2 support
+    (Closes: #936934)
+
+ -- Guido Günther <agx@sigxcpu.org>  Mon, 23 Mar 2020 12:24:30 +0100
+
+libvirt-python (5.6.0-1) unstable; urgency=medium
+
+  * [53c69bc] New upstream version 5.6.0
+    (Closes: #945462)
+  * [7fcc6d7] Add salsa-ci
+  * [899460f] d/changelog: Remove trailing whitespace
+  * [73f23d7] d/rules: Remove trailing whitespace
+  * [1b1b18a] d/copyright: Use https URLs
+  * [1a3ec8e] Bump standards version to 4.4.0
+
+ -- Guido Günther <agx@sigxcpu.org>  Sat, 30 Nov 2019 18:54:14 +0100
+
+libvirt-python (5.0.0-1) unstable; urgency=medium
+
+  * [b7e4a6f] New upstream version 5.0.0
+
+ -- Guido Günther <agx@sigxcpu.org>  Thu, 24 Jan 2019 09:17:00 +0100
+
+libvirt-python (4.10.0-1) unstable; urgency=medium
+
+  * [a8b779b] New upstream version 4.10.0
+
+ -- Guido Günther <agx@sigxcpu.org>  Tue, 18 Dec 2018 11:15:16 +0100
+
+libvirt-python (4.6.0-1) unstable; urgency=medium
+
+  * [2019ea6] New upstream version 4.6.0
+
+ -- Guido Günther <agx@sigxcpu.org>  Tue, 14 Aug 2018 15:22:44 +0200
+
+libvirt-python (4.5.0-1) unstable; urgency=medium
+
+  * [f1bae57] New upstream version 4.5.0
+    (Closes: #903016)
+  * [dce8cdb] d/control: Switch VCS-* URLs to salsa
+  * [f233e12] Build-dep on libvirt 4.5.0
+  * [901c80d] Drop python version fields.
+    All current Debian releases have recent enough versions.
+  * [b82391b] Bump standards version
+
+ -- Guido Günther <agx@sigxcpu.org>  Tue, 17 Jul 2018 19:49:38 +0200
+
+libvirt-python (4.0.0-1) unstable; urgency=medium
+
+  * [98db9b7] New upstream version 4.0.0
+
+ -- Guido Günther <agx@sigxcpu.org>  Tue, 23 Jan 2018 17:10:50 +0100
+
+libvirt-python (3.10.0-1) unstable; urgency=medium
+
+  * [f59a45e] d/watch: use https URL
+  * [34eb4fb] d/control: Bump policy to 4.1.1
+  * [3324f9e] New upstream version 3.10.0
+
+ -- Guido Günther <agx@sigxcpu.org>  Wed, 06 Dec 2017 15:28:25 +0100
+
+libvirt-python (3.9.0-1) unstable; urgency=medium
+
+  * [d42572d] New upstream version 3.9.0
+
+ -- Guido Günther <agx@sigxcpu.org>  Wed, 08 Nov 2017 09:20:04 +0100
+
+libvirt-python (3.8.0-1) unstable; urgency=medium
+
+  * [72d1e87] New upstream version 3.8.0
+
+ -- Guido Günther <agx@sigxcpu.org>  Fri, 20 Oct 2017 14:18:11 +0200
+
+libvirt-python (3.7.0-1) unstable; urgency=medium
+
+  * [97cf6f8] Bump standards version to 4.0.0
+  * [7696a99] Enable hardening
+  * [b0da9dd] New upstream version 3.7.0
+  * [633d64d] Add id-length to gbp.conf
+
+ -- Guido Günther <agx@sigxcpu.org>  Fri, 15 Sep 2017 08:58:09 +0200
+
+libvirt-python (3.5.0-1) unstable; urgency=medium
+
+  * [52a4687] Update upstream pgp key
+  * [a42ff89] New upstream version 3.5.0 (Closes: #867691)
+
+ -- Guido Günther <agx@sigxcpu.org>  Sat, 08 Jul 2017 19:58:21 +0200
+
+libvirt-python (3.0.0-2) unstable; urgency=medium
+
+  * Upload to unstable (Closes: #852886)
+
+ -- Guido Günther <agx@sigxcpu.org>  Sat, 28 Jan 2017 13:35:36 +0100
+
+libvirt-python (3.0.0-1) experimental; urgency=medium
+
+  * [f12a61d] New upstream version 3.0.0
+
+ -- Guido Günther <agx@sigxcpu.org>  Thu, 19 Jan 2017 20:08:56 +0100
+
+libvirt-python (2.5.0-1) unstable; urgency=medium
+
+  * [db83231] gbp.conf: switch upstream branch to upstream/latest
+  * [734ef76] New upstream version 2.5.0
+  * [0fdff52] Require recent libvirt
+
+ -- Guido Günther <agx@sigxcpu.org>  Sat, 07 Jan 2017 17:35:35 +0100
+
+libvirt-python (2.4.0-1) unstable; urgency=medium
+
+  * [4926be2] New upstream version 2.4.0
+  * [e94887f] Use https VCS URLs
+  * [71e37b8] Bump standards version
+
+ -- Guido Günther <agx@sigxcpu.org>  Fri, 04 Nov 2016 19:38:15 +0100
+
+libvirt-python (2.3.0-1) unstable; urgency=medium
+
+  * [54b8992] New upstream version 2.3.0
+  * [1dc6d53] Require recent libvirt
+
+ -- Guido Günther <agx@sigxcpu.org>  Sat, 08 Oct 2016 18:14:51 +0200
+
+libvirt-python (2.2.0-1) unstable; urgency=medium
+
+  * [75b3f0f] New upstream version 2.2.0
+
+ -- Guido Günther <agx@sigxcpu.org>  Tue, 13 Sep 2016 07:33:59 +0200
+
+libvirt-python (2.0.0-1) unstable; urgency=medium
+
+  * [024ecc0] New upstream version 2.0.0
+  * [c683d47] watch: Validate gpg signatures
+
+ -- Guido Günther <agx@sigxcpu.org>  Sat, 02 Jul 2016 15:19:11 +0200
+
+libvirt-python (1.3.5-1) unstable; urgency=medium
+
+  * [d8d81ed] New upstream version 1.3.5
+
+ -- Guido Günther <agx@sigxcpu.org>  Fri, 17 Jun 2016 10:27:53 +0200
+
+libvirt-python (1.3.4-1) unstable; urgency=medium
+
+  * [618bdcf] New upstream version 1.3.4
+
+ -- Guido Günther <agx@sigxcpu.org>  Thu, 12 May 2016 12:15:19 +0200
+
+libvirt-python (1.3.3-1) unstable; urgency=medium
+
+  * [caa354b] New upstream version 1.3.3 that knows about libvirt's new
+    symbols (Closes: #822384)
+
+ -- Guido Günther <agx@sigxcpu.org>  Sun, 24 Apr 2016 12:05:24 +0200
+
+libvirt-python (1.3.1-1) unstable; urgency=medium
+
+  * [ad19993] Add README.source from gbp example
+  * [9b75cb5] New upstream version 1.3.1
+
+ -- Guido Günther <agx@sigxcpu.org>  Thu, 04 Feb 2016 16:57:03 +0100
+
+libvirt-python (1.3.0-1) unstable; urgency=medium
+
+  * [f61a0ec] New upstream version 1.3.0
+  * [8d05a00] Use libvirt-daemon instead of libvirt-bin
+    (Closes: #809411)
+  * [c9240be] Remove duplicate sections. Thanks lintian!
+  * [191dd26] Use canonical VCS field. Thanks lintian!
+  * [80dc136] Bump standards version
+  * [08cb1fa] Use upstream shipped tests as autopkg smoketest
+
+ -- Guido Günther <agx@sigxcpu.org>  Wed, 30 Dec 2015 15:09:33 +0100
+
+libvirt-python (1.2.18-1) unstable; urgency=medium
+
+  * [c5ff0ce] New upstream version 1.2.18
+  * [0df5ce5] Drop patches all applied upstream
+
+ -- Guido Günther <agx@sigxcpu.org>  Fri, 14 Aug 2015 22:44:07 +0200
+
+libvirt-python (1.2.15-1) unstable; urgency=medium
+
+  * [42694b7] Adjust gbp.conf for experimental
+  * [a7a5386] New upstream version 1.2.12
+  * [984d13c] Require libvirt 1.2.12 to get all features enabled
+  * [c7637c1] New upstream version 1.2.15
+  * [36857e9] Require libvirt 1.2.15
+  * [f00217a] Make build reproducible.  Thanks to Chris Lamb for the patch
+    (Closes: #779679)
+
+ -- Guido Günther <agx@sigxcpu.org>  Mon, 18 May 2015 23:42:21 +0200
+
+libvirt-python (1.2.9-1) unstable; urgency=medium
+
+  * [e36b886] New upstream version 1.2.9 (Closes: #765159, #765108)
+  * [ac669e2] Build depend on libvirt 1.2.9 for the new bindings
+
+ -- Guido Günther <agx@sigxcpu.org>  Tue, 14 Oct 2014 14:22:53 +0200
+
+libvirt-python (1.2.8-1) unstable; urgency=medium
+
+  * [e081979] New upstream version 1.2.8
+  * [ad88fbf] Require libvirt 1.2.8 for the new bindings
+
+ -- Guido Günther <agx@sigxcpu.org>  Fri, 26 Sep 2014 19:19:57 +0200
+
+libvirt-python (1.2.6-2) unstable; urgency=medium
+
+  * Upload to unstable
+  * [6c8e688] Recommend libvirt-daemon instead of libvirt-bin. Sufficient for
+    many workloads.
+  * [ab417b9] Rebuild against newer libvirt
+
+ -- Guido Günther <agx@sigxcpu.org>  Mon, 11 Aug 2014 00:13:53 +0200
+
+libvirt-python (1.2.6-1) experimental; urgency=medium
+
+  * [8c67fb3] Fix Vcs-Git URL (Closes: #755758)
+  * [e5263b5] New upstream version 1.2.6 (Closes: #754648)
+
+ -- Guido Günther <agx@sigxcpu.org>  Thu, 24 Jul 2014 08:40:34 +0200
+
+libvirt-python (1.2.4-1) unstable; urgency=medium
+
+  * [5d4293a] Indicate that we break older virtinst
+    by the virStream changes in d43cb4c80a1986a2aa275a80b11685b13b58bfe5.
+    leading to errors like:
+        ERROR    'virStream' object has no attribute 'upload'
+  * [611d8de] New upstream version 1.2.4
+    (Closes: #750323, #753675, #605965)
+  * [498ac54] Drop patches, all fixed upstream
+  * [a319328] Add python3 support
+  * [42e49b0] Depend on newer libvirt for the API XML files
+  * [b0aa3c9] Update gbp.conf for sid builds
+
+ -- Guido Günther <agx@sigxcpu.org>  Thu, 10 Jul 2014 08:38:03 +0200
+
+libvirt-python (1.2.1-2) unstable; urgency=medium
+
+  * [007e79c] Add watch file
+  * [d43cb4c] Fix calling of virStreamSend method. Cherry-picked upstream
+    commit ea9339c878ffc344a3ef0cc659b7bce87125678f
+
+ -- Guido Günther <agx@sigxcpu.org>  Wed, 05 Feb 2014 22:30:32 +0100
+
+libvirt-python (1.2.1-1) unstable; urgency=medium
+
+  * [2de72d5] New upstream version 1.2.1
+  * [de2e87e] Build against newer libvirt
+
+ -- Guido Günther <agx@sigxcpu.org>  Sun, 19 Jan 2014 13:45:35 +0100
+
+libvirt-python (1.2.0-2) unstable; urgency=medium
+
+  * Upload to unstable
+
+ -- Guido Günther <agx@sigxcpu.org>  Fri, 20 Dec 2013 08:04:18 +0100
+
+libvirt-python (1.2.0-1) experimental; urgency=low
+
+  * Initial release (Closes: #731088)
+
+ -- Guido Günther <agx@sigxcpu.org>  Mon, 02 Dec 2013 08:35:03 +0100
