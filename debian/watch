@@ -1,0 +1,4 @@
+version=3
+
+opts="uversionmangle=s/\.-rc/~rc/;s/\.+$//,pgpsigurlmangle=s/$/.asc/"  \
+    https://libvirt.org/sources/python/libvirt-python-([\d\.]+)(-rc\d)?\.tar\.gz
