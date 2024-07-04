@@ -1,3 +1,87 @@
+libvirt-python (10.4.0-1) unstable; urgency=medium
+
+  * New upstream version 10.4.0
+
+ -- Pino Toscano <pino@debian.org>  Wed, 05 Jun 2024 05:54:27 +0200
+
+libvirt-python (10.3.0-1) unstable; urgency=medium
+
+  * New upstream version 10.3.0
+  * Bump Standards-Version to 4.7.0, no changes required.
+
+ -- Pino Toscano <pino@debian.org>  Tue, 07 May 2024 11:41:58 +0200
+
+libvirt-python (10.2.0-1) unstable; urgency=medium
+
+  * New upstream version 10.2.0
+
+ -- Pino Toscano <pino@debian.org>  Sun, 07 Apr 2024 09:42:08 +0200
+
+libvirt-python (10.1.0-1) unstable; urgency=medium
+
+  * New upstream version 10.1.0
+  * d/control: switch from transitional pkg-config Build-Depends to pkgconf
+
+ -- Pino Toscano <pino@debian.org>  Fri, 22 Mar 2024 14:25:19 +0100
+
+libvirt-python (10.0.0-1) unstable; urgency=medium
+
+  * New upstream version 10.0.0
+
+ -- Pino Toscano <pino@debian.org>  Sat, 20 Jan 2024 16:06:24 +0100
+
+libvirt-python (9.10.0-1) unstable; urgency=medium
+
+  * New upstream version 9.10.0
+
+ -- Pino Toscano <pino@debian.org>  Sun, 03 Dec 2023 08:21:24 +0100
+
+libvirt-python (9.9.0-1) unstable; urgency=medium
+
+  * New upstream version 9.9.0
+  * Drop the libvirt-daemon recommend.
+    The bindings themselves do not need the libvirt daemon; it is up to the
+    actual libvirt users to declare whether they need the libvirt daemon.
+
+ -- Pino Toscano <pino@debian.org>  Wed, 08 Nov 2023 07:46:32 +0100
+
+libvirt-python (9.8.0-1) unstable; urgency=medium
+
+  * d/watch: use @ARCHIVE_EXT@, switch to the new upstream download location
+  * d/control: mark python3-pytest as !nocheck
+  * New upstream version 9.8.0
+
+ -- Pino Toscano <pino@debian.org>  Mon, 09 Oct 2023 08:01:42 +0200
+
+libvirt-python (9.7.0-1) unstable; urgency=medium
+
+  * Update maintainership:
+    - set Maintainer to Debian Libvirt Maintainers, like other libvirt packages
+    - move Guido to Uploaders
+  * New upstream version 9.7.0
+
+ -- Pino Toscano <pino@debian.org>  Thu, 14 Sep 2023 20:43:50 +0200
+
+libvirt-python (9.6.0-1) unstable; urgency=medium
+
+  [ Guido Günther ]
+  * Add upstream metadata
+  * Update gbp.conf
+
+  [ Pino Toscano ]
+  * Add myself to Uploaders
+  * Drop the manual libvirt0 dependency
+  * Add missing changelog entry for NMU 8.4.0-0.1
+  * Drop git commit names from changelog
+  * Update watch file format version to 4.
+  * Use secure URI in Homepage field.
+  * New upstream version 9.6.0
+  * Stop shipping the upstream README, as it contains only build instructions
+  * d/control: add pybuild-plugin-pyproject build dependency
+  * Ship the upstream examples
+
+ -- Pino Toscano <pino@debian.org>  Sat, 02 Sep 2023 08:21:39 +0200
+
 libvirt-python (9.0.0-1) unstable; urgency=medium
 
   * [5cf8728] New upstream version 9.0.0
@@ -12,6 +96,23 @@ libvirt-python (9.0.0-1) unstable; urgency=medium
     Thanks to Jochen Sprickerhof
 
  -- Guido Günther <agx@sigxcpu.org>  Wed, 01 Feb 2023 10:52:00 +0100
+
+libvirt-python (8.4.0-0.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * New upstream release:
+    - supports libvirt 8.2.0 (Closes: #1011902)
+  * Update the build dependencies according to the upstream build system:
+    - add python3-setuptools, needed by the newer build system
+    - add python3-lxml, needed by new tests
+  * Drop the manual libvirt0 dependency, as there will be the proper one based
+    on shlibs.
+  * Include a patch proposed upstream to make the implementation of the 'build'
+    command of the build system compatible again with distutils; patch
+    build-clean-compat.diff.
+  * Add python3-lxml also as a dependency for the 'smoke3' autopkgtest.
+
+ -- Pino Toscano <pino@debian.org>  Sat, 25 Jun 2022 07:16:08 +0200
 
 libvirt-python (8.0.0-1) unstable; urgency=medium
 

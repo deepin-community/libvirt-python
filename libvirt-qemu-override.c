@@ -14,20 +14,15 @@
    which has over 180 autoconf-style HAVE_* definitions.  Shame on them.  */
 #undef HAVE_PTHREAD_H
 
+#include <stdio.h>
 #include <Python.h>
 #include <libvirt/libvirt-qemu.h>
 #include <libvirt/virterror.h>
 #include "typewrappers.h"
 #include "libvirt-utils.h"
-#include "build/libvirt-qemu.h"
+#include "libvirt-qemu.h"
 #ifndef __CYGWIN__
 # include <fcntl.h>
-#endif
-
-#ifndef __CYGWIN__
-extern PyObject *PyInit_libvirtmod_qemu(void);
-#else
-extern PyObject *PyInit_cygvirtmod_qemu(void);
 #endif
 
 #if 0
@@ -343,7 +338,7 @@ libvirt_qemu_virDomainQemuMonitorCommandWithFiles(PyObject *self ATTRIBUTE_UNUSE
     unsigned int noutfiles = 0;
     int *outfiles = NULL;
     char *result = NULL;
-    ssize_t i;
+    size_t i;
     PyObject *py_outfiles = NULL;
     PyObject *py_retval = NULL;
     int c_retval;
@@ -446,7 +441,7 @@ libvirt_qemu_virDomainQemuMonitorCommandWithFiles(PyObject *self ATTRIBUTE_UNUSE
  *									*
  ************************************************************************/
 static PyMethodDef libvirtQemuMethods[] = {
-#include "build/libvirt-qemu-export.c"
+#include "libvirt-qemu-export.c.inc"
     {(char *) "virDomainQemuMonitorCommand", libvirt_qemu_virDomainQemuMonitorCommand, METH_VARARGS, NULL},
 #if LIBVIR_CHECK_VERSION(0, 10, 0)
     {(char *) "virDomainQemuAgentCommand", libvirt_qemu_virDomainQemuAgentCommand, METH_VARARGS, NULL},
@@ -477,7 +472,7 @@ static struct PyModuleDef moduledef = {
     NULL
 };
 
-PyObject *
+PyMODINIT_FUNC
 #ifndef __CYGWIN__
 PyInit_libvirtmod_qemu
 #else
