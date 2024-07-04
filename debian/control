@@ -1,26 +1,28 @@
 Source: libvirt-python
 Section: python
 Priority: optional
-Maintainer: Guido Günther <agx@sigxcpu.org>
+Maintainer: Debian Libvirt Maintainers <pkg-libvirt-maintainers@lists.alioth.debian.org>
+Uploaders: Guido Günther <agx@sigxcpu.org>,
+ Pino Toscano <pino@debian.org>,
 Build-Depends: debhelper-compat (=13),
  dh-sequence-python3,
- pkg-config,
+ pkgconf,
+ pybuild-plugin-pyproject,
  python3-all-dev,
  python3-lxml <!nocheck>,
- python3-pytest,
+ python3-pytest <!nocheck>,
  python3-setuptools,
  libvirt-dev (>= 4.5.0~),
-Standards-Version: 4.6.2
+Standards-Version: 4.7.0
 Vcs-Git: https://salsa.debian.org/libvirt-team/libvirt-python.git
 Vcs-Browser: https://salsa.debian.org/libvirt-team/libvirt-python
-Homepage: http://libvirt.org
+Homepage: https://libvirt.org
 Rules-Requires-Root: no
 Testsuite: autopkgtest-pkg-pybuild
 
 Package: python3-libvirt
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${python3:Depends}, libvirt0 (>= 4.5.0~)
-Recommends: libvirt-daemon
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python3:Depends},
 Description: libvirt Python 3 bindings
  Libvirt is a C toolkit to interact with the virtualization capabilities
  of recent versions of Linux (and other OSes). The library aims at providing

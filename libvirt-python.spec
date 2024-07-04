@@ -14,11 +14,11 @@
 
 Summary: The libvirt virtualization API python3 binding
 Name: libvirt-python
-Version: 9.0.0
+Version: 10.4.0
 Release: 1%{?dist}
 Source0: https://libvirt.org/sources/python/%{name}-%{version}.tar.gz
 Url: https://libvirt.org
-License: LGPLv2+
+License: LGPL-2.1-or-later
 BuildRequires: libvirt-devel == %{version}
 BuildRequires: python3-devel
 BuildRequires: python3-pytest
@@ -70,10 +70,10 @@ exit 1
 %py3_install
 
 %check
-%{__python3} setup.py test
+%pytest
 
 %files -n python3-libvirt
-%doc ChangeLog AUTHORS README COPYING COPYING.LESSER examples/
+%doc ChangeLog AUTHORS README COPYING examples/
 %{python3_sitearch}/libvirt.py*
 %{python3_sitearch}/libvirtaio.py*
 %{python3_sitearch}/libvirt_qemu.py*
