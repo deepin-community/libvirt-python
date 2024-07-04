@@ -19,13 +19,7 @@
 #include <libvirt/virterror.h>
 #include "typewrappers.h"
 #include "libvirt-utils.h"
-#include "build/libvirt-lxc.h"
-
-#ifndef __CYGWIN__
-extern PyObject *PyInit_libvirtmod_lxc(void);
-#else
-extern PyObject *PyInit_cygvirtmod_lxc(void);
-#endif
+#include "libvirt-lxc.h"
 
 #if 0
 # define DEBUG_ERROR 1
@@ -94,7 +88,7 @@ libvirt_lxc_virDomainLxcOpenNamespace(PyObject *self ATTRIBUTE_UNUSED,
  *									*
  ************************************************************************/
 static PyMethodDef libvirtLxcMethods[] = {
-#include "build/libvirt-lxc-export.c"
+#include "libvirt-lxc-export.c.inc"
     {(char *) "virDomainLxcOpenNamespace", libvirt_lxc_virDomainLxcOpenNamespace, METH_VARARGS, NULL},
     {NULL, NULL, 0, NULL}
 };
@@ -115,7 +109,7 @@ static struct PyModuleDef moduledef = {
     NULL
 };
 
-PyObject *
+PyMODINIT_FUNC
 #ifndef __CYGWIN__
 PyInit_libvirtmod_lxc
 #else
