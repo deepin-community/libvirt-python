@@ -19,6 +19,8 @@
  *
  */
 
+#include <string.h>
+
 #include <Python.h>
 
 /* Ugly python defines that, which is also defined in errno.h */
@@ -532,7 +534,7 @@ virPyDictToTypedParams(PyObject *dict,
             Py_ssize_t i, size = PySequence_Size(value);
 
             for (i = 0; i < size; i++) {
-                PyObject *v = PySequence_ITEM(value, i);
+                PyObject *v = PySequence_GetItem(value, i);
                 if (virPyDictToTypedParamOne(&params, &n, &max,
                                              hints, nhints, keystr, v) < 0)
                     goto cleanup;
