@@ -18,19 +18,16 @@
 #define VIR_ENUM_SENTINELS
 
 #define PY_SSIZE_T_CLEAN
+
+#include <stdio.h>
+#include <string.h>
 #include <Python.h>
 #include <libvirt/libvirt.h>
 #include <libvirt/virterror.h>
 #include <stddef.h>
 #include "typewrappers.h"
-#include "build/libvirt.h"
+#include "libvirt.h"
 #include "libvirt-utils.h"
-
-#ifndef __CYGWIN__
-extern PyObject *PyInit_libvirtmod(void);
-#else
-extern PyObject *PyInit_cygvirtmod(void);
-#endif
 
 #if 0
 # define DEBUG_ERROR 1
@@ -347,7 +344,7 @@ libvirt_virDomainMemoryStats(PyObject *self ATTRIBUTE_UNUSED,
     virDomainPtr domain;
     PyObject *pyobj_domain;
     unsigned int nr_stats;
-    ssize_t i;
+    size_t i;
     virDomainMemoryStatStruct stats[VIR_DOMAIN_MEMORY_STAT_NR];
     PyObject *info;
     PyObject *key = NULL, *val = NULL;
@@ -456,7 +453,7 @@ libvirt_virDomainGetSchedulerType(PyObject *self ATTRIBUTE_UNUSED,
         goto cleanup;
 
     VIR_PY_TUPLE_SET_GOTO(info, 0, libvirt_constcharPtrWrap(c_retval), error);
-    VIR_PY_TUPLE_SET_GOTO(info, 1, libvirt_intWrap((long)nparams), error);
+    VIR_PY_TUPLE_SET_GOTO(info, 1, libvirt_intWrap(nparams), error);
 
  cleanup:
     VIR_FREE(c_retval);
@@ -1274,14 +1271,14 @@ libvirt_virDomainGetVcpus(PyObject *self ATTRIBUTE_UNUSED,
 
         VIR_PY_LIST_SET_GOTO(pycpuinfo, i, info, cleanup);
 
-        VIR_PY_TUPLE_SET_GOTO(info, 0, libvirt_intWrap((long)cpuinfo[i].number),
+        VIR_PY_TUPLE_SET_GOTO(info, 0, libvirt_intWrap(cpuinfo[i].number),
                               cleanup);
-        VIR_PY_TUPLE_SET_GOTO(info, 1, libvirt_intWrap((long)cpuinfo[i].state),
+        VIR_PY_TUPLE_SET_GOTO(info, 1, libvirt_intWrap(cpuinfo[i].state),
                               cleanup);
         VIR_PY_TUPLE_SET_GOTO(info, 2,
-                              libvirt_ulonglongWrap((long)cpuinfo[i].cpuTime),
+                              libvirt_ulonglongWrap(cpuinfo[i].cpuTime),
                               cleanup);
-        VIR_PY_TUPLE_SET_GOTO(info, 3, libvirt_intWrap((long)cpuinfo[i].cpu),
+        VIR_PY_TUPLE_SET_GOTO(info, 3, libvirt_intWrap(cpuinfo[i].cpu),
                               cleanup);
     }
     for (i = 0; i < dominfo.nrVirtCpu; i++) {
@@ -1766,15 +1763,15 @@ libvirt_virGetLastError(PyObject *self ATTRIBUTE_UNUSED,
     if ((info = PyTuple_New(9)) == NULL)
         return NULL;
 
-    VIR_PY_TUPLE_SET_GOTO(info, 0, libvirt_intWrap((long)err->code), error);
-    VIR_PY_TUPLE_SET_GOTO(info, 1, libvirt_intWrap((long)err->domain), error);
+    VIR_PY_TUPLE_SET_GOTO(info, 0, libvirt_intWrap(err->code), error);
+    VIR_PY_TUPLE_SET_GOTO(info, 1, libvirt_intWrap(err->domain), error);
     VIR_PY_TUPLE_SET_GOTO(info, 2, libvirt_constcharPtrWrap(err->message), error);
-    VIR_PY_TUPLE_SET_GOTO(info, 3, libvirt_intWrap((long)err->level), error);
+    VIR_PY_TUPLE_SET_GOTO(info, 3, libvirt_intWrap(err->level), error);
     VIR_PY_TUPLE_SET_GOTO(info, 4, libvirt_constcharPtrWrap(err->str1), error);
     VIR_PY_TUPLE_SET_GOTO(info, 5, libvirt_constcharPtrWrap(err->str2), error);
     VIR_PY_TUPLE_SET_GOTO(info, 6, libvirt_constcharPtrWrap(err->str3), error);
-    VIR_PY_TUPLE_SET_GOTO(info, 7, libvirt_intWrap((long)err->int1), error);
-    VIR_PY_TUPLE_SET_GOTO(info, 8, libvirt_intWrap((long)err->int2), error);
+    VIR_PY_TUPLE_SET_GOTO(info, 7, libvirt_intWrap(err->int1), error);
+    VIR_PY_TUPLE_SET_GOTO(info, 8, libvirt_intWrap(err->int2), error);
 
     return info;
 
@@ -1806,15 +1803,15 @@ libvirt_virConnGetLastError(PyObject *self ATTRIBUTE_UNUSED,
     if ((info = PyTuple_New(9)) == NULL)
         return NULL;
 
-    VIR_PY_TUPLE_SET_GOTO(info, 0, libvirt_intWrap((long)err->code), error);
-    VIR_PY_TUPLE_SET_GOTO(info, 1, libvirt_intWrap((long)err->domain), error);
+    VIR_PY_TUPLE_SET_GOTO(info, 0, libvirt_intWrap(err->code), error);
+    VIR_PY_TUPLE_SET_GOTO(info, 1, libvirt_intWrap(err->domain), error);
     VIR_PY_TUPLE_SET_GOTO(info, 2, libvirt_constcharPtrWrap(err->message), error);
-    VIR_PY_TUPLE_SET_GOTO(info, 3, libvirt_intWrap((long)err->level), error);
+    VIR_PY_TUPLE_SET_GOTO(info, 3, libvirt_intWrap(err->level), error);
     VIR_PY_TUPLE_SET_GOTO(info, 4, libvirt_constcharPtrWrap(err->str1), error);
     VIR_PY_TUPLE_SET_GOTO(info, 5, libvirt_constcharPtrWrap(err->str2), error);
     VIR_PY_TUPLE_SET_GOTO(info, 6, libvirt_constcharPtrWrap(err->str3), error);
-    VIR_PY_TUPLE_SET_GOTO(info, 7, libvirt_intWrap((long)err->int1), error);
-    VIR_PY_TUPLE_SET_GOTO(info, 8, libvirt_intWrap((long)err->int2), error);
+    VIR_PY_TUPLE_SET_GOTO(info, 7, libvirt_intWrap(err->int1), error);
+    VIR_PY_TUPLE_SET_GOTO(info, 8, libvirt_intWrap(err->int2), error);
 
     return info;
 
@@ -1853,15 +1850,15 @@ libvirt_virErrorFuncHandler(ATTRIBUTE_UNUSED void *ctx,
 
         VIR_PY_TUPLE_SET_GOTO(list, 1, info, cleanup);
 
-        VIR_PY_TUPLE_SET_GOTO(info, 0, libvirt_intWrap((long)err->code), cleanup);
-        VIR_PY_TUPLE_SET_GOTO(info, 1, libvirt_intWrap((long)err->domain), cleanup);
+        VIR_PY_TUPLE_SET_GOTO(info, 0, libvirt_intWrap(err->code), cleanup);
+        VIR_PY_TUPLE_SET_GOTO(info, 1, libvirt_intWrap(err->domain), cleanup);
         VIR_PY_TUPLE_SET_GOTO(info, 2, libvirt_constcharPtrWrap(err->message), cleanup);
-        VIR_PY_TUPLE_SET_GOTO(info, 3, libvirt_intWrap((long)err->level), cleanup);
+        VIR_PY_TUPLE_SET_GOTO(info, 3, libvirt_intWrap(err->level), cleanup);
         VIR_PY_TUPLE_SET_GOTO(info, 4, libvirt_constcharPtrWrap(err->str1), cleanup);
         VIR_PY_TUPLE_SET_GOTO(info, 5, libvirt_constcharPtrWrap(err->str2), cleanup);
         VIR_PY_TUPLE_SET_GOTO(info, 6, libvirt_constcharPtrWrap(err->str3), cleanup);
-        VIR_PY_TUPLE_SET_GOTO(info, 7, libvirt_intWrap((long)err->int1), cleanup);
-        VIR_PY_TUPLE_SET_GOTO(info, 8, libvirt_intWrap((long)err->int2), cleanup);
+        VIR_PY_TUPLE_SET_GOTO(info, 7, libvirt_intWrap(err->int1), cleanup);
+        VIR_PY_TUPLE_SET_GOTO(info, 8, libvirt_intWrap(err->int2), cleanup);
 
         /* TODO pass conn and dom if available */
         result = PyObject_Call(libvirt_virPythonErrorFuncHandler, list, NULL);
@@ -1921,7 +1918,7 @@ virConnectCredCallbackWrapper(virConnectCredentialPtr cred,
     PyObject *pycb;
     PyObject *pyret = NULL;
     int ret = -1;
-    ssize_t i;
+    size_t i;
 
     LIBVIRT_ENSURE_THREAD_STATE;
 
@@ -1944,7 +1941,7 @@ virConnectCredCallbackWrapper(virConnectCredentialPtr cred,
         VIR_PY_TUPLE_SET_GOTO(pycred, i, pycreditem, cleanup);
 
         VIR_PY_LIST_SET_GOTO(pycreditem, 0,
-                             libvirt_intWrap((long)cred[i].type), cleanup);
+                             libvirt_intWrap(cred[i].type), cleanup);
         VIR_PY_LIST_SET_GOTO(pycreditem, 1,
                              libvirt_constcharPtrWrap(cred[i].prompt), cleanup);
 
@@ -2012,7 +2009,7 @@ libvirt_virConnectOpenAuth(PyObject *self ATTRIBUTE_UNUSED,
                            PyObject *args)
 {
     PyObject *py_retval;
-    virConnectPtr c_retval;
+    virConnectPtr c_retval = NULL;
     char * name;
     unsigned int flags;
     PyObject *pyauth;
@@ -2030,13 +2027,14 @@ libvirt_virConnectOpenAuth(PyObject *self ATTRIBUTE_UNUSED,
 
     auth.ncredtype = PyList_Size(pycredtype);
     if (auth.ncredtype) {
-        ssize_t i;
+        size_t i;
         if (VIR_ALLOC_N(auth.credtype, auth.ncredtype) < 0)
             return PyErr_NoMemory();
         for (i = 0; i < auth.ncredtype; i++) {
             PyObject *val;
             val = PyList_GetItem(pycredtype, i);
-            auth.credtype[i] = (int)PyLong_AsLong(val);
+            if (libvirt_intUnwrap(val, &auth.credtype[i]) < 0)
+                goto cleanup;
         }
     }
     if (pycredcb && pycredcb != Py_None)
@@ -2047,6 +2045,7 @@ libvirt_virConnectOpenAuth(PyObject *self ATTRIBUTE_UNUSED,
     c_retval = virConnectOpenAuth(name, &auth, flags);
     LIBVIRT_END_ALLOW_THREADS;
 
+ cleanup:
     VIR_FREE(auth.credtype);
     py_retval = libvirt_virConnectPtrWrap((virConnectPtr) c_retval);
     return py_retval;
@@ -2687,11 +2686,11 @@ libvirt_virDomainGetInfo(PyObject *self ATTRIBUTE_UNUSED,
     if ((py_retval = PyList_New(5)) == NULL)
         return NULL;
 
-    VIR_PY_LIST_SET_GOTO(py_retval, 0, libvirt_intWrap((int) info.state), error);
+    VIR_PY_LIST_SET_GOTO(py_retval, 0, libvirt_intWrap(info.state), error);
     VIR_PY_LIST_SET_GOTO(py_retval, 1, libvirt_ulongWrap(info.maxMem), error);
     VIR_PY_LIST_SET_GOTO(py_retval, 2, libvirt_ulongWrap(info.memory), error);
     VIR_PY_LIST_SET_GOTO(py_retval, 3,
-                         libvirt_intWrap((int) info.nrVirtCpu), error);
+                         libvirt_intWrap(info.nrVirtCpu), error);
     VIR_PY_LIST_SET_GOTO(py_retval, 4,
                    libvirt_ulonglongWrap(info.cpuTime), error);
 
@@ -2846,13 +2845,13 @@ libvirt_virNodeGetInfo(PyObject *self ATTRIBUTE_UNUSED,
     VIR_PY_LIST_SET_GOTO(py_retval, 0,
                          libvirt_constcharPtrWrap(&info.model[0]), error);
     VIR_PY_LIST_SET_GOTO(py_retval, 1,
-                         libvirt_longWrap((long) info.memory >> 10), error);
-    VIR_PY_LIST_SET_GOTO(py_retval, 2, libvirt_intWrap((int) info.cpus), error);
-    VIR_PY_LIST_SET_GOTO(py_retval, 3, libvirt_intWrap((int) info.mhz), error);
-    VIR_PY_LIST_SET_GOTO(py_retval, 4, libvirt_intWrap((int) info.nodes), error);
-    VIR_PY_LIST_SET_GOTO(py_retval, 5, libvirt_intWrap((int) info.sockets), error);
-    VIR_PY_LIST_SET_GOTO(py_retval, 6, libvirt_intWrap((int) info.cores), error);
-    VIR_PY_LIST_SET_GOTO(py_retval, 7, libvirt_intWrap((int) info.threads), error);
+                         libvirt_ulongWrap(info.memory >> 10), error);
+    VIR_PY_LIST_SET_GOTO(py_retval, 2, libvirt_intWrap(info.cpus), error);
+    VIR_PY_LIST_SET_GOTO(py_retval, 3, libvirt_intWrap(info.mhz), error);
+    VIR_PY_LIST_SET_GOTO(py_retval, 4, libvirt_intWrap(info.nodes), error);
+    VIR_PY_LIST_SET_GOTO(py_retval, 5, libvirt_intWrap(info.sockets), error);
+    VIR_PY_LIST_SET_GOTO(py_retval, 6, libvirt_intWrap(info.cores), error);
+    VIR_PY_LIST_SET_GOTO(py_retval, 7, libvirt_intWrap(info.threads), error);
 
     return py_retval;
 
@@ -3871,7 +3870,7 @@ libvirt_virStoragePoolGetInfo(PyObject *self ATTRIBUTE_UNUSED,
         return NULL;
 
     VIR_PY_LIST_SET_GOTO(py_retval, 0,
-                         libvirt_intWrap((int) info.state), error);
+                         libvirt_intWrap(info.state), error);
     VIR_PY_LIST_SET_GOTO(py_retval, 1,
                          libvirt_ulonglongWrap(info.capacity), error);
     VIR_PY_LIST_SET_GOTO(py_retval, 2,
@@ -3912,7 +3911,7 @@ libvirt_virStorageVolGetInfo(PyObject *self ATTRIBUTE_UNUSED,
         return NULL;
 
     VIR_PY_LIST_SET_GOTO(py_retval, 0,
-                         libvirt_intWrap((int) info.type), error);
+                         libvirt_intWrap(info.type), error);
     VIR_PY_LIST_SET_GOTO(py_retval, 1,
                          libvirt_ulonglongWrap(info.capacity), error);
     VIR_PY_LIST_SET_GOTO(py_retval, 2,
@@ -3952,7 +3951,7 @@ libvirt_virStorageVolGetInfoFlags(PyObject *self ATTRIBUTE_UNUSED,
         return NULL;
 
     VIR_PY_LIST_SET_GOTO(py_retval, 0,
-                         libvirt_intWrap((int) info.type), error);
+                         libvirt_intWrap(info.type), error);
     VIR_PY_LIST_SET_GOTO(py_retval, 1,
                          libvirt_ulonglongWrap(info.capacity), error);
     VIR_PY_LIST_SET_GOTO(py_retval, 2,
@@ -4922,7 +4921,7 @@ libvirt_virDomainGetJobInfo(PyObject *self ATTRIBUTE_UNUSED,
         return NULL;
 
     VIR_PY_LIST_SET_GOTO(py_retval, 0,
-                         libvirt_intWrap((int) info.type), error);
+                         libvirt_intWrap(info.type), error);
     VIR_PY_LIST_SET_GOTO(py_retval, 1,
                          libvirt_ulonglongWrap(info.timeElapsed), error);
     VIR_PY_LIST_SET_GOTO(py_retval, 2,
@@ -5238,7 +5237,7 @@ libvirt_virDomainInterfaceAddresses(PyObject *self ATTRIBUTE_UNUSED,
     unsigned int source;
     unsigned int flags;
     int ifaces_count = 0;
-    ssize_t i, j;
+    ssize_t i;
 
     if (!PyArg_ParseTuple(args, (char *) "OII:virDomainInterfaceAddresses",
                           &pyobj_domain, &source, &flags))
@@ -5260,6 +5259,7 @@ libvirt_virDomainInterfaceAddresses(PyObject *self ATTRIBUTE_UNUSED,
         virDomainInterfacePtr iface = ifaces[i];
         PyObject *py_addrs = NULL;
         PyObject *py_iface = NULL;
+        size_t j;
 
         if (!(py_iface = PyDict_New()))
             goto error;
@@ -7646,6 +7646,59 @@ libvirt_virConnectNetworkEventLifecycleCallback(virConnectPtr conn ATTRIBUTE_UNU
     return ret;
 }
 
+#ifdef VIR_NETWORK_EVENT_ID_METADATA_CHANGE
+static int
+libvirt_virConnectNetworkEventMetadataChangeCallback(virConnectPtr conn ATTRIBUTE_UNUSED,
+                                                     virNetworkPtr dom,
+                                                     int type,
+                                                     const char *nsuri,
+                                                     void *opaque)
+{
+    PyObject *pyobj_cbData = (PyObject*)opaque;
+    PyObject *pyobj_dom;
+    PyObject *pyobj_ret = NULL;
+    PyObject *pyobj_conn;
+    PyObject *dictKey;
+    int ret = -1;
+
+    LIBVIRT_ENSURE_THREAD_STATE;
+
+    if (!(dictKey = libvirt_constcharPtrWrap("conn")))
+        goto cleanup;
+    pyobj_conn = PyDict_GetItem(pyobj_cbData, dictKey);
+    Py_DECREF(dictKey);
+
+    /* Create a python instance of this virNetworkPtr */
+    virNetworkRef(dom);
+    if (!(pyobj_dom = libvirt_virNetworkPtrWrap(dom))) {
+        virNetworkFree(dom);
+        goto cleanup;
+    }
+    Py_INCREF(pyobj_cbData);
+
+    /* Call the Callback Dispatcher */
+    pyobj_ret = PyObject_CallMethod(pyobj_conn,
+                                    (char*)"_dispatchNetworkEventMetadataChangeCallback",
+                                    (char*)"OisO",
+                                    pyobj_dom, type, nsuri, pyobj_cbData);
+
+    Py_DECREF(pyobj_cbData);
+    Py_DECREF(pyobj_dom);
+
+ cleanup:
+    if (!pyobj_ret) {
+        DEBUG("%s - ret:%p\n", __FUNCTION__, pyobj_ret);
+        PyErr_Print();
+    } else {
+        Py_DECREF(pyobj_ret);
+        ret = 0;
+    }
+
+    LIBVIRT_RELEASE_THREAD_STATE;
+    return ret;
+}
+#endif /* VIR_NETWORK_EVENT_ID_METADATA_CHANGE */
+
 static PyObject *
 libvirt_virConnectNetworkEventRegisterAny(PyObject *self ATTRIBUTE_UNUSED,
                                           PyObject *args)
@@ -7676,6 +7729,12 @@ libvirt_virConnectNetworkEventRegisterAny(PyObject *self ATTRIBUTE_UNUSED,
     case VIR_NETWORK_EVENT_ID_LIFECYCLE:
         cb = VIR_NETWORK_EVENT_CALLBACK(libvirt_virConnectNetworkEventLifecycleCallback);
         break;
+
+#ifdef VIR_NETWORK_EVENT_ID_METADATA_CHANGE
+    case VIR_NETWORK_EVENT_ID_METADATA_CHANGE:
+        cb = VIR_NETWORK_EVENT_CALLBACK(libvirt_virConnectNetworkEventMetadataChangeCallback);
+        break;
+#endif /* VIR_NETWORK_EVENT_ID_METADATA_CHANGE */
 
     case VIR_NETWORK_EVENT_ID_LAST:
         break;
@@ -7924,7 +7983,7 @@ libvirt_virStreamRecv(PyObject *self ATTRIBUTE_UNUSED,
     LIBVIRT_END_ALLOW_THREADS;
 
     buf[ret > -1 ? ret : 0] = '\0';
-    DEBUG("StreamRecv ret=%d strlen=%d\n", ret, (int) strlen(buf));
+    DEBUG("StreamRecv ret=%d strlen=%zu\n", ret, strlen(buf));
 
     if (ret == -2) {
         VIR_FREE(buf);
@@ -7979,7 +8038,7 @@ libvirt_virDomainSendKey(PyObject *self ATTRIBUTE_UNUSED,
     int ret;
     ssize_t i;
     unsigned int keycodes[VIR_DOMAIN_SEND_KEY_MAX_KEYS];
-    unsigned int nkeycodes;
+    int nkeycodes;
 
     if (!PyArg_ParseTuple(args, (char *)"OiiOII:virDomainSendKey",
                           &pyobj_domain, &codeset, &holdtime, &pyobj_list,
@@ -8151,6 +8210,18 @@ static virPyTypedParamsHint virPyDomainMigrate3Params[] = {
 # ifdef VIR_MIGRATE_PARAM_PARALLEL_CONNECTIONS
     { VIR_MIGRATE_PARAM_PARALLEL_CONNECTIONS, VIR_TYPED_PARAM_INT },
 # endif
+# ifdef VIR_MIGRATE_PARAM_DISKS_URI
+    { VIR_MIGRATE_PARAM_DISKS_URI, VIR_TYPED_PARAM_STRING },
+#endif
+#ifdef VIR_MIGRATE_PARAM_TLS_DESTINATION
+    { VIR_MIGRATE_PARAM_TLS_DESTINATION, VIR_TYPED_PARAM_STRING },
+#endif
+#ifdef VIR_MIGRATE_PARAM_COMPRESSION_ZLIB_LEVEL
+    { VIR_MIGRATE_PARAM_COMPRESSION_ZLIB_LEVEL, VIR_TYPED_PARAM_INT },
+#endif
+#ifdef VIR_MIGRATE_PARAM_COMPRESSION_ZSTD_LEVEL
+    { VIR_MIGRATE_PARAM_COMPRESSION_ZSTD_LEVEL, VIR_TYPED_PARAM_INT },
+#endif
 };
 
 
@@ -8502,7 +8573,7 @@ libvirt_virDomainCreateWithFiles(PyObject *self ATTRIBUTE_UNUSED,
     unsigned int flags;
     unsigned int nfiles;
     int *files = NULL;
-    ssize_t i;
+    size_t i;
 
     if (!PyArg_ParseTuple(args, (char *)"OOI:virDomainCreateWithFiles",
                           &pyobj_domain, &pyobj_files, &flags))
@@ -8530,7 +8601,7 @@ libvirt_virDomainCreateWithFiles(PyObject *self ATTRIBUTE_UNUSED,
     c_retval = virDomainCreateWithFiles(domain, nfiles, files, flags);
     LIBVIRT_END_ALLOW_THREADS;
 
-    py_retval = libvirt_intWrap((int) c_retval);
+    py_retval = libvirt_intWrap(c_retval);
 
  cleanup:
     VIR_FREE(files);
@@ -8551,7 +8622,7 @@ libvirt_virDomainCreateXMLWithFiles(PyObject *self ATTRIBUTE_UNUSED,
     unsigned int flags;
     unsigned int nfiles;
     int *files = NULL;
-    ssize_t i;
+    size_t i;
 
     if (!PyArg_ParseTuple(args, (char *)"OzOI:virDomainCreateXMLWithFiles",
                           &pyobj_conn, &xmlDesc, &pyobj_files, &flags))
@@ -8601,7 +8672,8 @@ libvirt_virDomainFSFreeze(PyObject *self ATTRIBUTE_UNUSED,
     unsigned int flags;
     unsigned int nmountpoints = 0;
     char **mountpoints = NULL;
-    ssize_t i = 0, j;
+    size_t i = 0;
+    size_t j = 0;
 
     if (!PyArg_ParseTuple(args, (char *)"OOI:virDomainFSFreeze",
                           &pyobj_domain, &pyobj_list, &flags))
@@ -8648,7 +8720,8 @@ libvirt_virDomainFSThaw(PyObject *self ATTRIBUTE_UNUSED,
     unsigned int flags;
     unsigned int nmountpoints = 0;
     char **mountpoints = NULL;
-    ssize_t i = 0, j;
+    size_t i = 0;
+    size_t j = 0;
 
     if (!PyArg_ParseTuple(args, (char *)"OOI:virDomainFSThaw",
                           &pyobj_domain, &pyobj_list, &flags))
@@ -10069,13 +10142,16 @@ libvirt_virStreamRecvFlags(PyObject *self ATTRIBUTE_UNUSED,
     LIBVIRT_END_ALLOW_THREADS;
 
     buf[ret > -1 ? ret : 0] = '\0';
-    DEBUG("StreamRecvFlags ret=%d strlen=%d\n", ret, (int) strlen(buf));
+    DEBUG("StreamRecvFlags ret=%d strlen=%zu\n", ret, strlen(buf));
 
-    if (ret == -2 || ret == -3)
-        return libvirt_intWrap(ret);
-    if (ret < 0)
-        return VIR_PY_NONE;
-    rv = libvirt_charPtrSizeWrap((char *) buf, (Py_ssize_t) ret);
+    if (ret == -2 || ret == -3) {
+        rv = libvirt_intWrap(ret);
+    } else if (ret < 0) {
+        rv = VIR_PY_NONE;
+    } else {
+        rv = libvirt_charPtrSizeWrap((char *) buf, (Py_ssize_t) ret);
+    }
+
     VIR_FREE(buf);
     return rv;
 }
@@ -10804,7 +10880,7 @@ libvirt_virDomainFDAssociate(PyObject *self ATTRIBUTE_UNUSED,
     unsigned int flags;
     unsigned int nfiles;
     int *files = NULL;
-    ssize_t i;
+    size_t i;
 
     if (!PyArg_ParseTuple(args, (char *)"OsOI:virDomainFDAssociate",
                           &pyobj_domain, &name, &pyobj_files, &flags))
@@ -10832,7 +10908,7 @@ libvirt_virDomainFDAssociate(PyObject *self ATTRIBUTE_UNUSED,
     c_retval = virDomainFDAssociate(domain, name, nfiles, files, flags);
     LIBVIRT_END_ALLOW_THREADS;
 
-    py_retval = libvirt_intWrap((int) c_retval);
+    py_retval = libvirt_intWrap(c_retval);
 
  cleanup:
     VIR_FREE(files);
@@ -10848,7 +10924,7 @@ libvirt_virDomainFDAssociate(PyObject *self ATTRIBUTE_UNUSED,
  *									*
  ************************************************************************/
 static PyMethodDef libvirtMethods[] = {
-#include "build/libvirt-export.c"
+#include "libvirt-export.c.inc"
     {(char *) "virGetVersion", libvirt_virGetVersion, METH_VARARGS, NULL},
     {(char *) "virConnectGetVersion", libvirt_virConnectGetVersion, METH_VARARGS, NULL},
 #if LIBVIR_CHECK_VERSION(1, 1, 3)
@@ -11145,7 +11221,7 @@ static struct PyModuleDef moduledef = {
     NULL
 };
 
-PyObject *
+PyMODINIT_FUNC
 #ifndef __CYGWIN__
 PyInit_libvirtmod
 #else
