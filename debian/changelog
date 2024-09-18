@@ -1,3 +1,21 @@
+libvirt-python (10.7.0-1) unstable; urgency=medium
+
+  * New upstream version 10.7.0
+
+ -- Pino Toscano <pino@debian.org>  Sun, 08 Sep 2024 06:38:27 +0200
+
+libvirt-python (10.6.0-1) unstable; urgency=medium
+
+  * New upstream version 10.6.0
+
+ -- Pino Toscano <pino@debian.org>  Sat, 10 Aug 2024 05:10:21 +0200
+
+libvirt-python (10.5.0-1) unstable; urgency=medium
+
+  * New upstream version 10.5.0
+
+ -- Pino Toscano <pino@debian.org>  Mon, 08 Jul 2024 05:16:43 +0200
+
 libvirt-python (10.4.0-1) unstable; urgency=medium
 
   * New upstream version 10.4.0

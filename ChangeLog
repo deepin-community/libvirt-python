@@ -1,3 +1,53 @@
+ 2024- 8- 8 Ariel Otilibili <otilibil@eurecom.fr>
+    
+    example/domstart.py: Removed useless brackets for tuple unpacking
+    
+    
+ 2024- 8- 8 Ariel Otilibili <otilibil@eurecom.fr>
+    
+    tox.ini: Bumped environment list for Python
+    * aligned list with supported Python versions [1]
+    * as of today, supported versions are 3.8 to 3.12
+    
+    https://devguide.python.org/versions/
+    
+    
+    
+ 2024- 8- 8 Ariel Otilibili <otilibil@eurecom.fr>
+    
+    Makefile: `make check` now computes env variable on the fly
+    * env variable used to be Python3.6
+    * Python3.6 is end of life since December 2021 [1].
+    
+    [1] https://devguide.python.org/versions/
+    
+    
+    
+ 2024- 8- 5 Jiri Denemark <jdenemar@redhat.com>
+    
+    Post-release version bump to 10.7.0
+    
+    
+ 2024- 7- 1 Jiri Denemark <jdenemar@redhat.com>
+    
+    Post-release version bump to 10.6.0
+    
+    
+ 2024- 6- 11 Konstantin Khorenko <khorenko@virtuozzo.com>
+    
+    examples/nodestat: Show memory pinning information again
+    Resurrect the logic after it has been occasionally broken during fixing
+    the syntax complains from python.
+    
+    Fixes: c588ba9 ("examples/nodestat: Fix None comparison")
+    
+    
+    
+ 2024- 6- 3 Jiri Denemark <jdenemar@redhat.com>
+    
+    Post-release version bump to 10.5.0
+    
+    
  2024- 5- 2 Michal Privoznik <mprivozn@redhat.com>
     
     ci: Drop CentOS 8 Stream and switch F38 to 40, Ubuntu 20.04 to 22.04
