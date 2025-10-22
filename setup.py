@@ -87,7 +87,6 @@ def get_module_lists():
     ldflags = get_pkgconfig_data(["--libs-only-L"], "libvirt", False).split()
     cflags = get_pkgconfig_data(["--cflags"], "libvirt", False).split()
 
-    cflags += ["-Ibuild"]
     cflags += ["-Wp,-DPy_LIMITED_API=0x03060000"]
 
     module = Extension("libvirtmod",
@@ -197,7 +196,7 @@ class my_sdist(sdist):
     def gen_rpm_spec(self):
         return self._gen_from_in("libvirt-python.spec.in",
                                  "libvirt-python.spec",
-                                 "@VERSION@",
+                                 "@PY_VERSION@",
                                  getVersion())
 
     def gen_authors(self):
