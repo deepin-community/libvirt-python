@@ -246,7 +246,7 @@ def fixup_class_method_mapping(basicklassmap):
                     "LookupByID", "LookupByName", "LookupByKey", "LookupByPath",
                     "LookupByMACString", "LookupByUsage", "LookupByVolume",
                     "LookupByTargetPath", "LookupSCSIHostByWWN", "LookupByPortDev",
-                    "Restore", "RestoreFlags", "RestoreParams",
+                    "Restore", "RestoreFlags",
                     "SaveImageDefineXML", "SaveImageGetXMLDesc", "DefineXMLFlags",
                     "CreateXMLFlags"]:
             if klass != "virDomain":
@@ -317,8 +317,6 @@ def fixup_class_method_mapping(basicklassmap):
             func = "XMLDesc"
         if func == "mACString":
             func = "MACString"
-        if func == "fDAssociate":
-            func = "FDAssociate"
 
         finalklassmap[name] = (klass, func, cname)
 

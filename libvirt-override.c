@@ -26,8 +26,14 @@
 #include <libvirt/virterror.h>
 #include <stddef.h>
 #include "typewrappers.h"
-#include "libvirt.h"
+#include "build/libvirt.h"
 #include "libvirt-utils.h"
+
+#ifndef __CYGWIN__
+extern PyObject *PyInit_libvirtmod(void);
+#else
+extern PyObject *PyInit_cygvirtmod(void);
+#endif
 
 #if 0
 # define DEBUG_ERROR 1
@@ -10144,14 +10150,11 @@ libvirt_virStreamRecvFlags(PyObject *self ATTRIBUTE_UNUSED,
     buf[ret > -1 ? ret : 0] = '\0';
     DEBUG("StreamRecvFlags ret=%d strlen=%zu\n", ret, strlen(buf));
 
-    if (ret == -2 || ret == -3) {
-        rv = libvirt_intWrap(ret);
-    } else if (ret < 0) {
-        rv = VIR_PY_NONE;
-    } else {
-        rv = libvirt_charPtrSizeWrap((char *) buf, (Py_ssize_t) ret);
-    }
-
+    if (ret == -2 || ret == -3)
+        return libvirt_intWrap(ret);
+    if (ret < 0)
+        return VIR_PY_NONE;
+    rv = libvirt_charPtrSizeWrap((char *) buf, (Py_ssize_t) ret);
     VIR_FREE(buf);
     return rv;
 }
@@ -10924,7 +10927,7 @@ libvirt_virDomainFDAssociate(PyObject *self ATTRIBUTE_UNUSED,
  *									*
  ************************************************************************/
 static PyMethodDef libvirtMethods[] = {
-#include "libvirt-export.c.inc"
+#include "build/libvirt-export.c"
     {(char *) "virGetVersion", libvirt_virGetVersion, METH_VARARGS, NULL},
     {(char *) "virConnectGetVersion", libvirt_virConnectGetVersion, METH_VARARGS, NULL},
 #if LIBVIR_CHECK_VERSION(1, 1, 3)
@@ -11221,7 +11224,7 @@ static struct PyModuleDef moduledef = {
     NULL
 };
 
-PyMODINIT_FUNC
+PyObject *
 #ifndef __CYGWIN__
 PyInit_libvirtmod
 #else

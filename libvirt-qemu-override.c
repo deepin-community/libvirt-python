@@ -20,9 +20,15 @@
 #include <libvirt/virterror.h>
 #include "typewrappers.h"
 #include "libvirt-utils.h"
-#include "libvirt-qemu.h"
+#include "build/libvirt-qemu.h"
 #ifndef __CYGWIN__
 # include <fcntl.h>
+#endif
+
+#ifndef __CYGWIN__
+extern PyObject *PyInit_libvirtmod_qemu(void);
+#else
+extern PyObject *PyInit_cygvirtmod_qemu(void);
 #endif
 
 #if 0
@@ -441,7 +447,7 @@ libvirt_qemu_virDomainQemuMonitorCommandWithFiles(PyObject *self ATTRIBUTE_UNUSE
  *									*
  ************************************************************************/
 static PyMethodDef libvirtQemuMethods[] = {
-#include "libvirt-qemu-export.c.inc"
+#include "build/libvirt-qemu-export.c"
     {(char *) "virDomainQemuMonitorCommand", libvirt_qemu_virDomainQemuMonitorCommand, METH_VARARGS, NULL},
 #if LIBVIR_CHECK_VERSION(0, 10, 0)
     {(char *) "virDomainQemuAgentCommand", libvirt_qemu_virDomainQemuAgentCommand, METH_VARARGS, NULL},
@@ -472,7 +478,7 @@ static struct PyModuleDef moduledef = {
     NULL
 };
 
-PyMODINIT_FUNC
+PyObject *
 #ifndef __CYGWIN__
 PyInit_libvirtmod_qemu
 #else

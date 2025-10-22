@@ -1,7 +1,6 @@
 # Shim wrapper around setup.py to allow for familiar build targets
 
-PYTHON  ?= python
-VERSION := $(shell $(PYTHON) -c 'import sys; print("{}{}".format(sys.version_info.major, sys.version_info.minor))')
+PYTHON ?= python
 
 all:
 	$(PYTHON) -m build
@@ -13,7 +12,7 @@ clean:
 	rm -rf build/ dist/
 
 check: all
-	tox -e py$(VERSION)
+	tox -e py36
 
 test: all
 	tox
