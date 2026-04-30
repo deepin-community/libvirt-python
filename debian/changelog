@@ -1,3 +1,9 @@
+libvirt-python (10.7.0+really9.10.0-1) unstable; urgency=medium
+
+  * Revert to previous upstream.
+
+ -- lichenggang <lichenggang@deepin.org>  Thu, 30 Apr 2026 16:08:20 +0800
+
 libvirt-python (9.10.0-1) unstable; urgency=medium
 
   * New upstream version 9.10.0
